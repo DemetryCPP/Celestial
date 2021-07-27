@@ -7,7 +7,9 @@
 Также мои друзья переписали этот проект: 
 
 https://github.com/Ddystopia/nbody
+
 https://github.com/Er2ch/planets-lua
+
 https://github.com/RadeonGalwet/planets
 
 ## Управление
