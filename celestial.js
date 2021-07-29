@@ -4,9 +4,10 @@ const { hypot, sqrt, abs, PI } = Math;
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-id = 0;
 
-const k = 0.3;
+let id = 0;
+let k = 0.3;
+let checkCollision = true;
 
 class CosmosObject {
     constructor(mass, [ x, y ], [ vx, vy ]) {
@@ -94,11 +95,13 @@ setInterval(() => {
                 a.influence(b);
     
     // collision
-    for (let a of planets) {
-        for (let b of planets)
-            if (a.id != b.id)
-                a.collision(b)
-        a.check = false;
+    if (checkCollision) {
+        for (let a of planets) {
+            for (let b of planets)
+                if (a.id != b.id)
+                    a.collision(b)
+            a.check = false;
+        }
     }
 
     ctx.clearRect(0, 0, 1000, 1000);
