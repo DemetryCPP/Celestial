@@ -8,6 +8,8 @@ const ctx = canvas.getContext('2d');
 let id = 0;
 let k = 0.3;
 let checkCollision = true;
+let screenCenter = [0,0]
+let scale = 1;
 
 class CosmosObject {
     constructor(mass, [ x, y ], [ vx, vy ]) {
@@ -41,7 +43,7 @@ class CosmosObject {
     draw() {
         const circle = new Path2D();
         circle.moveTo(this.x, this.y)
-        circle.arc(this.x, this.y, this.radius, 0, 2 * PI);
+        circle.arc(screenCenter[0] + this.x / scale, screenCenter[1] + this.y / scale, this.radius / scale, 0, 2 * PI);
         ctx.fillStyle = this.color;
         ctx.fill(circle);
     }
@@ -79,9 +81,9 @@ class CosmosObject {
 }
 
 const planets = [
-    new CosmosObject(1000, [ 500, 500 ], [ 0, 0 ]),
-    new CosmosObject(9, [ 500, 120 ], [ sqrt(1e3 / 400 ), 0 ]),
-    new CosmosObject(2, [ 500, 85 ], [ sqrt(1e3 / 400 ) - sqrt(11/35), 0 ]),
+    new CosmosObject(1000, [ 375, 375 ], [ 0, 0 ]),
+    new CosmosObject(4, [ 375, 100 ], [ sqrt(1e3 / 275 ), 0 ]),
+    new CosmosObject(1, [ 375, 85 ], [ sqrt(1e3 / 275 ) - sqrt(5/15), 0 ]),
 ]
 
 setInterval(() => {
