@@ -10,6 +10,9 @@ let k = 0.3;
 let checkCollision = true;
 let screenCenter = [0,0]
 let scale = 1;
+let trailLength = 50;
+let trailFreq = -1;
+let trailIndex = 0;
 
 class CosmosObject {
     constructor(mass, [ x, y ], [ vx, vy ]) {
@@ -77,13 +80,15 @@ class CosmosObject {
         b.vy = newvy2;
     }
 
+    trail = [];
     check = true;
 }
 
 const planets = [
-    new CosmosObject(1000, [ 375, 375 ], [ 0, 0 ]),
+    new CosmosObject(1000, [ 375, 375 ], [ -0.01, 0 ]),
     new CosmosObject(4, [ 375, 100 ], [ sqrt(1e3 / 275 ), 0 ]),
     new CosmosObject(1, [ 375, 85 ], [ sqrt(1e3 / 275 ) - sqrt(5/15), 0 ]),
+    new CosmosObject(6, [ 70, 375 ], [ 0, sqrt(1e3 / 285) ])
 ]
 
 setInterval(() => {
@@ -101,7 +106,7 @@ setInterval(() => {
         for (let a of planets) {
             for (let b of planets)
                 if (a.id != b.id)
-                    a.collision(b)
+                    a.collision(b);
             a.check = false;
         }
     }
@@ -113,7 +118,28 @@ setInterval(() => {
         planet.x += planet.vx;
         planet.y += planet.vy;
 
+        
         // draw
         planet.draw();
+        
+        // trail
+        for (let [ x, y ] of planet.trail) {
+            const circle = new Path2D();
+            circle.moveTo(x, y)
+            circle.arc(x, y, 1, 0, 2 * PI);
+            ctx.fill(circle);
+        }
+        
+        if (trailIndex < trailFreq)
+            continue;
+
+        if (planet.trail.length >= trailLength)
+            planet.trail.shift();
+        
+        planet.trail.push([ planet.x, planet.y ]);
     }
+
+    if (trailIndex >= trailFreq)
+        trailIndex = 0;
+    trailIndex++;
 }, 1);
