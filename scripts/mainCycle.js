@@ -1,12 +1,10 @@
 const objects = [
-    new CosmosObject(1000, [ 375, 375 ], [ -0.01, 0 ]),
-    new CosmosObject(4, [ 375, 100 ], [ sqrt(1e3 / 275 ), 0 ]),
-    new CosmosObject(1, [ 375, 85 ], [ sqrt(1e3 / 275 ) - sqrt(5/15), 0 ]),
-    new CosmosObject(6, [ 70, 375 ], [ 0, sqrt(1e3 / 285) ])
+    new CosmosObject(1000, [ 0, 0 ], [ 0, 0 ]),
+    new CosmosObject(50, [ 0, 200 ], [ sqrt(1050/200), 0 ])
 ]
 
 function step() {
-    ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+    ctx.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
 
     for (let a of objects) {
         for (let b of objects)
