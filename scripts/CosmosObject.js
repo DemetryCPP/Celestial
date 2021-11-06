@@ -1,5 +1,5 @@
 class CosmosObject {
-    constructor(mass, [ x, y ], [ vx, vy ], color) {
+    constructor(mass, [ x, y ], [ vx, vy ], color, name) {
         this.mass = +mass;
         
         this.x = x;
@@ -9,6 +9,8 @@ class CosmosObject {
         this.vy = vy;
 
         this.color = color ?? this.randomColor();
+        this.id = ++planetsCount;
+        this.name = name ?? 'Planet №' + this.id;
     }
 
     get radius() {
@@ -17,9 +19,14 @@ class CosmosObject {
 
     draw() {
         ctx.beginPath();
+
         ctx.arc(this.x, this.y, this.radius, 0, 2 * PI);
         ctx.fillStyle = this.color;
         ctx.fill();
+
+        ctx.fillStyle = "white"
+        ctx.font = "50px sans-serif"
+        ctx.fillText(this.name, this.x + 5, this.y - 5);
     }
 
     influence(b = new CosmosObject) {
@@ -38,7 +45,7 @@ class CosmosObject {
     }
 
     randomColor() {
-        const randomHEX = () => (8 + round(random() * 8)).toString(16);
+        const randomHEX = () => (8 + round(random() * 4)).toString(16);
         return '#' + Array.from(new Array(6), randomHEX).join('');
     }
 }
