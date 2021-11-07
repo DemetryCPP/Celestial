@@ -26,7 +26,18 @@ input {
     background-color: cornflowerblue;
 
     text-align: center;
-    
+}
+
+.delete {
+    background-color: red;
+    border-style: solid;
+    border-color: rgb(173, 0, 0);
+    border-radius: 10px;
+    transition: background-color .2s;
+}
+
+.delete:hover {
+    background-color: rgb(199, 0, 0);
 }
 
 .settings {

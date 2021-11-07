@@ -23,7 +23,7 @@ canvas.addEventListener("click", event => {
         if (hypot(object.x + canvas.width / 2 - x, object.y + canvas.height / 2 - y) < object.radius) {
             selected = object;
 
-            planetName.disabled = planetColor.disabled = planetMass.disabled = false;
+            planetName.disabled = planetColor.disabled = planetMass.disabled = deleteButton.disabled = false;
 
             planetName.value = selected.name;
             planetColor.value = selected.color;
@@ -36,8 +36,8 @@ canvas.addEventListener("click", event => {
     selected = null;
 
     planetName.value = `не выбрано`;
-    planetColor.disabled = true;
-    planetName.disabled = true;
+    planetName.disabled = planetColor.disabled = planetMass.disabled = deleteButton.disabled = true;
+
 })
 
 // name
@@ -57,3 +57,16 @@ planetColor.addEventListener("change", () => selected.color = planetColor.value)
 planetMass.value = 0;
 planetMass.disabled = true;
 planetMass.addEventListener("change", () => selected.mass = mass.value)
+
+// delete
+
+deleteButton.addEventListener("click", () => { 
+    const index = objects.indexOf(selected);
+    
+    if (index == -1) return;
+
+    objects.splice(index, 1);
+
+    planetName.value = `не выбрано`;
+    planetName.disabled = planetColor.disabled = planetMass.disabled = deleteButton.disabled = true;
+});

@@ -1,3 +1,4 @@
+const deleteButton = document.getElementById("delete");
 const planetColor = document.getElementById("color");
 const planetName = document.getElementById("name");
 const planetMass = document.getElementById("mass");
