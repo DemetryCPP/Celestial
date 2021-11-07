@@ -1,6 +1,6 @@
 const objects = [
     new CosmosObject(1000, [ 0, 0 ], [ 0, 0 ]),
-    new CosmosObject(50, [ 0, 200 ], [ sqrt(1050/200), 0 ])
+    new CosmosObject(5, [ 0, 200 ], [ sqrt(1005/200), 0 ])
 ]
 
 function step() {

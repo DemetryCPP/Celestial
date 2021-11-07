@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    color:cornflowerblue;
 }
 
 body {
@@ -15,4 +16,19 @@ canvas {
     width: 60%;
     height: 75%;
     margin-left: 6%;
+}
+
+input {
+    border-style: solid;
+    border-color: blue;
+    border-radius: 10px;
+
+    background-color: cornflowerblue;
+
+    text-align: center;
+    
+}
+
+.settings {
+    margin-left: 4%;
 }
