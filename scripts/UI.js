@@ -15,7 +15,26 @@ window.onresize = resize;
 
 let selected = null;
 
+function lockAll() {
+    selected = null;
+    
+    planetName.value    = "не выбрано";
+    planetColor.value   = "#FFFFFF"
+    planetMass.value    = 0;
+    
+    planetName.disabled = planetColor.disabled = planetMass.disabled = deleteButton.disabled = true;
+}
+
+function unlockAll() {
+    planetName.disabled = planetColor.disabled = planetMass.disabled = deleteButton.disabled = false;
+}
+
+lockAll();
+
 canvas.addEventListener("click", event => {
+    if (editingForAdd)
+        return;
+
     const x = event.pageX - canvas.getBoundingClientRect().left;
     const y = event.pageY - canvas.getBoundingClientRect().top;
 
@@ -23,50 +42,61 @@ canvas.addEventListener("click", event => {
         if (hypot(object.x + canvas.width / 2 - x, object.y + canvas.height / 2 - y) < object.radius) {
             selected = object;
 
-            planetName.disabled = planetColor.disabled = planetMass.disabled = deleteButton.disabled = false;
-
-            planetName.value = selected.name;
-            planetColor.value = selected.color;
-            planetMass.value = selected.mass;
+            planetName.value    = selected.name;
+            planetColor.value   = selected.color;
+            planetMass.value    = selected.mass;
+    
+            unlockAll();
 
             return;
         }
     }
 
-    selected = null;
-
-    planetName.value = `не выбрано`;
-    planetName.disabled = planetColor.disabled = planetMass.disabled = deleteButton.disabled = true;
-
+    lockAll();
 })
 
-// name
+planetName.addEventListener ("change", ()   => editingForAdd ? null : selected.name  = planetName.value);   // name
+planetColor.addEventListener("change", ()   => editingForAdd ? null : selected.color = planetColor.value);  // color
+planetMass.addEventListener ("change", ()   => editingForAdd ? null : selected.mass  = planetMass.value);   // mass
 
-planetName.value = `не выбрано`;
-planetName.disabled = true;
-planetName.addEventListener("change", () => selected.name = planetName.value);
+deleteButton.addEventListener("click", () => objects.splice(objects.indexOf(selected), 1), lockAll());      // delete
 
-// color
+// add button
 
-planetColor.value = "#FFFFFF"
-planetColor.disabled = true;
-planetColor.addEventListener("change", () => selected.color = planetColor.value);
+var editingForAdd = false;
+var newPlanetCoords = null;
 
-// mass
+canvas.addEventListener("click", event => newPlanetCoords = [
+    event.pageX - canvas.getBoundingClientRect().left - canvas.width  / 2,
+    event.pageY - canvas.getBoundingClientRect().top  - canvas.height / 2
+]);
 
-planetMass.value = 0;
-planetMass.disabled = true;
-planetMass.addEventListener("change", () => selected.mass = mass.value)
+addButton.addEventListener("click", () => {
+    if (!editingForAdd) {
+        editingForAdd = true;
+        unlockAll();
+        
+        planetName.value = "Planet №" + (planetsCount + 1);
+        cancelButton.disabled = false;
+    } else {
+        if (newPlanetCoords == null)
+            return alert("Выберите координаты вашей планеты, кликнув по полю.");
 
-// delete
+        if (planetMass.value <= 0)
+            return alert("Масса должна быть больше нуля");
 
-deleteButton.addEventListener("click", () => { 
-    const index = objects.indexOf(selected);
-    
-    if (index == -1) return;
+        objects.push(new CosmosObject(planetMass.value, newPlanetCoords, [0, 0], planetColor.value, planetName.value))
+        lockAll();
 
-    objects.splice(index, 1);
-
-    planetName.value = `не выбрано`;
-    planetName.disabled = planetColor.disabled = planetMass.disabled = deleteButton.disabled = true;
+        editingForAdd = false;
+    }
 });
+
+// cancel button
+
+cancelButton.disabled = true;
+cancelButton.addEventListener("click", () => {
+    editingForAdd = false;
+    lockAll();
+    newPlanetCoords = null;
+})

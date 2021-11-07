@@ -21,7 +21,7 @@ class CosmosObject {
         ctx.beginPath();
         
         if (selected == this) { 
-            ctx.fillStyle = `rgb(0, 255, 0)`
+            ctx.fillStyle = "rgb(0, 255, 0)"
             ctx.arc(this.x, this.y, this.radius + 2, 0, 2 * PI);
             ctx.fill();
 

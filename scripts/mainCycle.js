@@ -16,6 +16,14 @@ function step() {
         a.x += a.vx;
         a.y += a.vy;
     }
+
+    if (newPlanetCoords !== null && editingForAdd) {
+        ctx.beginPath();
+
+        ctx.fillStyle = "rgb(255, 0, 0)";
+        ctx.arc(...newPlanetCoords, 2, 0, 2 * PI);
+        ctx.fill();
+    }
 }
 
 setInterval(step, 20);
