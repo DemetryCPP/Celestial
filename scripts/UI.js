@@ -57,7 +57,10 @@ canvas.addEventListener("click", event => {
 
 planetName.addEventListener ("change", ()   => editingForAdd ? null : selected.name  = planetName.value);   // name
 planetColor.addEventListener("change", ()   => editingForAdd ? null : selected.color = planetColor.value);  // color
-planetMass.addEventListener ("change", ()   => editingForAdd ? null : selected.mass  = planetMass.value);   // mass
+planetMass.addEventListener ("change", ()   => {
+    if (planetMass.value <= 0) return alert("Масса должна быть больше нуля!");
+    editingForAdd ? null : selected.mass  = planetMass.value
+});   // mass
 
 deleteButton.addEventListener("click", () => objects.splice(objects.indexOf(selected), 1), lockAll());      // delete
 
@@ -89,6 +92,7 @@ addButton.addEventListener("click", () => {
         lockAll();
 
         editingForAdd = false;
+        cancelButton.disabled = true;
     }
 });
 
@@ -99,4 +103,5 @@ cancelButton.addEventListener("click", () => {
     editingForAdd = false;
     lockAll();
     newPlanetCoords = null;
-})
+    cancelButton.disabled = true;
+});
