@@ -1,26 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf8">
-    <link rel="stylesheet" href="style.css">
-
-    <title>Demetry's Celestail</title>
-
-    <script src="scripts/variables.js"      defer></script>
-    <script src="scripts/CosmosObject.js"   defer></script>
-    <script src="scripts/UI.js"             defer></script>
-    <script src="scripts/mainCycle.js"      defer></script>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <title>My first three.js app</title>
 </head>
-<body>
-    <canvas id="canvas"></canvas>
-    <div class="settings">
-        <p>Планета: <input id="name"    type="text"  ></p>
-        <p>Цвет:    <input id="color"   type="color" ></p>
-        <p>Масса:   <input id="mass"    type="number"></p>
-        
-        <button class="delete"  id="delete"> Удалить    </button>
-        <button class="add"     id="add">    Добавить   </button>
-        <button class="cancel"  id="cancel"> Отмена     </button>
+<body class="ui-light">
+
+    <div class="context-menu">
+        <button class="btn" id="createBody"><span><i class="fas fa-plus"></i>Create new body</span></button>
+        <button class="btn" id="bodySettings"><span><i class="fas fa-cog"></i>Settings</span></button>
+        <button class="btn btn_danger" id="deleteBody"><span><i class="fas fa-trash"></i>Delete body</span></button>
     </div>
+
+    <div class="settings">
+        <div class="settings__row">
+            <input type="text" class="input" id="bodyName"/>
+        </div>
+        <div class="settings__row">
+            <span>Mass:</span> <input type="range" min="1" max="2000" class="slider" id="mass">
+        </div>
+        <div class="settings__row">
+            <span>Color:</span> <input type="color" id="color">
+        </div>
+        <div class="settings__row">
+            <span>Velocity:</span>
+            <div class="settings__row">
+                <span>x:</span> <input type="range" min="-10" max="10" class="slider" id="vx">
+            </div>
+            <div class="settings__row">
+                <span>y:</span> <input type="range" min="-10" max="10" class="slider" id="vy">
+            </div>
+            <div class="settings__row">
+                <span>z:</span> <input type="range" min="-10" max="10" class="slider" id="vz">
+            </div>
+        </div>
+        <div class="settings__row">
+            <button class="btn btn_outline" id="settingsConfirm">
+                Confirm
+            </button>
+        </div>
+    </div>
+
+    <span id="planet-label"></span>
 </body>
+
+<script src="js/UI.js"></script>
+<script src="node_modules/three/build/three.min.js"></script>
+<script src="js/variables.js"></script>
+<script src="node_modules/three/examples/js/shaders/CopyShader.js"></script>
+<script src="node_modules/three/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="node_modules/three/examples/js/postprocessing/OutlinePass.js"></script>
+<script src="node_modules/three/examples/js/postprocessing/RenderPass.js"></script>
+<script src="node_modules/three/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="node_modules/three/examples/js/controls/OrbitControls.js"></script>
+<script src="node_modules/three/examples/js/controls/TransformControls.js"></script>
+<script src="js/CosmosObject.js"></script>
+<script src="js/main.js"></script>
 </html>
